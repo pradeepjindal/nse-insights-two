@@ -70,7 +70,7 @@ public class MainProcess implements ApplicationRunner {
                     //pradeepProcessorB.process(forDate);
                     manishProcessor.process(forDate);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("ERROR: {}", e);
                 }
             });
             //pradeepProcessor.process(LocalDate.now());

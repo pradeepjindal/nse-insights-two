@@ -3,11 +3,9 @@ package org.pra.nse.processor;
 import org.pra.nse.ApCo;
 import org.pra.nse.ProCo;
 import org.pra.nse.bean.out.PraBean;
-import org.pra.nse.csv.download.DownloadManager;
 import org.pra.nse.csv.merge.CmMerger;
 import org.pra.nse.csv.merge.FoMerger;
 import org.pra.nse.csv.merge.MtMerger;
-import org.pra.nse.csv.read.FoCsvReader;
 import org.pra.nse.csv.writer.ManishCsvWriter;
 import org.pra.nse.util.PraNameUtils;
 import org.pra.nse.util.NseFileUtils;
@@ -27,8 +25,6 @@ import java.util.TreeSet;
 public class ManishProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(ManishProcessor.class);
 
-    private final DownloadManager downloadManager;
-    private final FoCsvReader csvReader;
     private final CmMerger cmMerger;
     private final FoMerger foMerger;
     private final MtMerger mtMerger;
@@ -36,14 +32,10 @@ public class ManishProcessor {
     private final PraNameUtils praNameUtils;
     private final ManishCsvWriter csvWriter;
 
-    public ManishProcessor(DownloadManager downloadManager,
-                           FoCsvReader csvReader,
-                           CmMerger cmMerger, FoMerger foMerger, MtMerger mtMerger,
+    public ManishProcessor(CmMerger cmMerger, FoMerger foMerger, MtMerger mtMerger,
                            ManishCsvWriter csvWriter,
                            NseFileUtils nseFileUtils,
                            PraNameUtils praNameUtils) {
-        this.downloadManager = downloadManager;
-        this.csvReader = csvReader;
         this.cmMerger = cmMerger;
         this.foMerger = foMerger;
         this.mtMerger = mtMerger;
@@ -90,7 +82,7 @@ public class ManishProcessor {
 		try {
             process(LocalDate.now());
 		} catch(Exception e) {
-			e.printStackTrace();
+            LOGGER.error("{}", e);
 		}
         LOGGER.info("Manish Processor | ============================== | Finished");
     }
